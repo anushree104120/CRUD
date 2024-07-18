@@ -1,37 +1,43 @@
-import { useEffect, useState } from 'react'
-import './App.css'
+import { useEffect, useState } from 'react';
+import './App.css';
 import axios from 'axios';
 
 function App() {
-  const[users,setUsers]= useState([]);
-  // const index =0;
+  const [users, setUsers] = useState([]);
 
-  useEffect(()=>{
+  useEffect(() => {
     axios.get("http://localhost:3000/api/users")
-    .then((response)=>{
-      setUsers(response.data)
-    })
-    .catch((error)=>{
-      console.log(error)
-    })
-  })
-  
-
+      .then((response) => {
+        setUsers(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []); 
   return (
     <>
       <h1>Hello</h1>
-      {
-        users.map((user,index)=>{
-          <div key = {user.id}>
-            <h2>Name : {user.name}</h2><br></br>
-            <h3> Age : {user.age}</h3><br></br>
-            <h3>Email: {user.email}</h3>
-          </div>
-        })
-      }
-      
+      <h2>{users.length}</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user) => (
+            <tr key={user.id}>
+              <td>{user.name}</td>
+              <td>{user.age}</td>
+              <td>{user.email}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
